@@ -1,0 +1,165 @@
+
+
+package com.howtodoinjava.demo.dto;
+
+public class Order {
+	
+	private int chargeAmountDollars;
+	
+	private User user;
+
+	public int getChargeAmountDollars() {
+		return chargeAmountDollars;
+	}
+
+	public void setChargeAmountDollars(int chargeAmountDollars) {
+		this.chargeAmountDollars = chargeAmountDollars;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	
+	
+}
+
+
+package com.howtodoinjava.demo.dto;
+
+public class User {
+	
+	
+	private String firstName;
+	
+	private String lastName;
+	
+	private String email;
+	
+	private Object stripeCustomerId;
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Object getStripeCustomerId() {
+		return stripeCustomerId;
+	}
+
+	public void setStripeCustomerId(Object stripeCustomerId) {
+		this.stripeCustomerId = stripeCustomerId;
+	}
+	
+}
+
+
+public static void main(String[] args) {
+		
+		PaymentServiceImpl impl = new PaymentServiceImpl();
+		
+		User user = new User();
+		user.setFirstName("siddiq123");
+		user.setLastName("ahmed");
+		user.setEmail("abc");
+		
+		String id =impl.createCustomer(user);
+		user.setStripeCustomerId(id);
+		Order order = new Order();
+		order.setChargeAmountDollars(2000);
+		order.setUser(user);
+		boolean paymentDone =impl.chargeCreditCard(order);
+		System.out.println("Is payment done :" +paymentDone);
+		
+		
+		System.out.println(id);
+
+	}
+
+}
+
+
+public String createCustomer(User user) {
+	  Stripe.apiKey = "sk_test_JuUfskNfrwSLNFwsBDrYu0Wy";
+    Map<String, Object> customerParams = new HashMap<String, Object>();
+    customerParams.put("description", 
+      user.getFirstName() + " " + user.getLastName());
+	customerParams.put("email", user.getEmail());
+		
+	String id = null;
+		
+	try { 
+      // Create customer
+	  Customer stripeCustomer = Customer.create(customerParams);
+	  id = stripeCustomer.getId();
+	  System.out.println(stripeCustomer);
+	} catch (CardException e) {
+	  // Transaction failure
+	} catch (RateLimitException e) {
+	  // Too many requests made to the API too quickly
+	} catch (InvalidRequestException e) {
+	  // Invalid parameters were supplied to Stripe's API
+	} catch (AuthenticationException e) {
+	  // Authentication with Stripe's API failed (wrong API key?)
+	} catch (APIConnectionException e) {
+	  // Network communication with Stripe failed
+	} catch (StripeException e) {
+	  // Generic error
+	} catch (Exception e) {
+	// Something else happened unrelated to Stripe
+	}
+	
+    return id;	
+  }
+
+  @Override
+  public boolean chargeCreditCard(Order order) {
+	  
+	  Stripe.apiKey = "sk_test_JuUfskNfrwSLNFwsBDrYu0Wy";//Vender Stripe api key
+			
+    // Stripe requires the charge amount to be in cents
+    int chargeAmountCents = (int) order.getChargeAmountDollars() * 100;
+
+    User user = order.getUser();
+
+	Map<String, Object> chargeParams = new HashMap<String, Object>();
+	chargeParams.put("amount", chargeAmountCents);
+	//chargeParams.put("amount", 2000);
+	chargeParams.put("currency", "usd");
+	chargeParams.put("description", "Monthly Charges");		
+	//chargeParams.put("customer", user.getStripeCustomerId());
+	chargeParams.put("customer", "cus_BoKDI2yrfB1Snt");
+			
+	try {
+	  // Submit charge to credit card 
+	  Charge charge = Charge.create(chargeParams);
+      System.out.println(charge);
+      return true;
+	} catch (Exception e) {
+	 System.out.println("Error In payment");
+	 return false;
+	}	
+  }
