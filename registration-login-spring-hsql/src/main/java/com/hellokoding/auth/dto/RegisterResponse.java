@@ -7,7 +7,7 @@ public class RegisterResponse {
 
     private String status;
     private String mesage;
-    private String id;
+    private String userId;
 
     public String getStatus() {
         return status;
@@ -25,11 +25,11 @@ public class RegisterResponse {
         this.mesage = mesage;
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

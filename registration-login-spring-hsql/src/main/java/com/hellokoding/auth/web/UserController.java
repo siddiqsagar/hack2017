@@ -46,10 +46,10 @@ public class UserController {
         String returnView = "registration";
         if ("SUCCESS".equalsIgnoreCase(registerResponse.getStatus())) {
             if ("MERCHANT".equalsIgnoreCase(userForm.getType())) {
-                model.addAttribute("cusId", registerResponse.getId());
+                model.addAttribute("cusId", registerResponse.getUserId());
                 returnView = "merchanthome";
             } else if ("CUSTOMER".equalsIgnoreCase(userForm.getType())) {
-                model.addAttribute("merchantId", registerResponse.getId());
+                model.addAttribute("merchantId", registerResponse.getUserId());
                 returnView = "cushome";
             }
         }
@@ -78,27 +78,30 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@ModelAttribute("loginBean") LoginBean loginBean, Model model) {
-        String returnView = "login";
+        String returnView = "cushome";
         LoginResponse loginResponse = restTemplate.postForObject(LOGIN_URI, loginBean, LoginResponse.class);
-        if ("SUCCESS".equalsIgnoreCase(loginResponse.getStatus())) {
+        System.out.println("login id" + loginResponse.getUserId());
+       /* if ("SUCCESS".equalsIgnoreCase(loginResponse.getStatus())) {
             model.addAttribute("id", loginResponse.getId());
             if ("CUSTOMER".equalsIgnoreCase(loginResponse.getType())) {
                 returnView = "cushome";
             } else if ("MERCHANT".equalsIgnoreCase(loginResponse.getType())) {
 
                 returnView = "merchanthome";
+
             }
-        }
+        }*/
+        model.addAttribute("id", loginResponse.getUserId());
         return returnView;
     }
 
-    @RequestMapping(value = "/cushome", method = RequestMethod.GET)
-    public String cushome(Model model, String error, String logout) {
-
-            model.addAttribute("message", "You have been logged out successfully.");
-
-        return "cushome";
-    }
+//   @RequestMapping(value = "/cushome", method = RequestMethod.GET)
+//    public String cushome(Model model, String error, String logout) {
+//
+//            model.addAttribute("message", "You have been logged out successfully.");
+//
+//        return "cushome";
+//    }
 
     @RequestMapping(value = "/resolve", method = RequestMethod.POST)
     public String resolve(@ModelAttribute("resolveBean") ResolveBean resolveBean, Model model) {
