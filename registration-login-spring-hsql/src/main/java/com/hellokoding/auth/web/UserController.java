@@ -9,21 +9,26 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Controller
+@SessionAttributes("sessionObject")
 public class UserController {
     @Autowired
     private UserService userService;
 
+
+
     RestTemplate restTemplate = new RestTemplate();
 
     final static String LOGIN_URI = "http://dashdriverapi.azurewebsites.net/login";
-    final static String REGISTER_URI = "http://dashdriverapi.azurewebsites.net/login";
+    final static String REGISTER_URI = "http://dashdriverapi.azurewebsites.net/register";
     final static String GET_MERCHANTS_URI = "http://dashdriverapi.azurewebsites.net/merchants";
     final static String TRANSACTION = "http://dashdriverapi.azurewebsites.net/transaction?id={id}";
 
@@ -91,20 +96,11 @@ public class UserController {
         return returnView;
     }
 
-//   @RequestMapping(value = "/cushome", method = RequestMethod.GET)
-//    public String cushome(Model model, String error, String logout) {
-//
-//            model.addAttribute("message", "You have been logged out successfully.");
-//
-//        return "cushome";
-//    }
-
     @RequestMapping(value = "/resolve", method = RequestMethod.POST)
     public String resolve(@ModelAttribute("resolveBean") ResolveBean resolveBean, Model model) {
 
         System.out.println("********************* ID"+resolveBean.getId());
-        List<TransactionResponse> transactionResponseList = restTemplate.getForObject(TRANSACTION, List.class,"5a154399733ca52057dd63f0");
-
+        List<TransactionResponse> transactionResponseList = restTemplate.getForObject(TRANSACTION, List.class,resolveBean.getId());
         model.addAttribute("id" ,resolveBean.getId());
         model.addAttribute("transactionResponseList" ,transactionResponseList);
         return resolveBean.getRequestView();

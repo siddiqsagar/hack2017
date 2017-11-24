@@ -31,7 +31,7 @@
 
 	<header>
 		<h1>
-			PayIt Registration</span>
+			PayIt Login</span>
 		</h1>
 
 		<div class="container">
