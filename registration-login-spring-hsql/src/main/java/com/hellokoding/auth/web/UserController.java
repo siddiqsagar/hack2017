@@ -39,13 +39,10 @@ public class UserController {
     public String registration(@ModelAttribute("userForm") UserDetails userForm, Model model) {
 
         RegisterResponse registerResponse = restTemplate.postForObject(REGISTER_URI, userForm, RegisterResponse.class);
-
-        List<Merchant> listOfAvailableMerchants = (List<Merchant>) restTemplate.getForEntity(GET_MERCHANTS_URI, List.class);
-
-
         String returnView = "registration";
         if ("SUCCESS".equalsIgnoreCase(registerResponse.getStatus())) {
             if ("MERCHANT".equalsIgnoreCase(userForm.getType())) {
+                System.out.println("Register");
                 model.addAttribute("cusId", registerResponse.getUserId());
                 returnView = "merchanthome";
             } else if ("CUSTOMER".equalsIgnoreCase(userForm.getType())) {
@@ -78,20 +75,19 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@ModelAttribute("loginBean") LoginBean loginBean, Model model) {
-        String returnView = "cushome";
+        String returnView = "login";
         LoginResponse loginResponse = restTemplate.postForObject(LOGIN_URI, loginBean, LoginResponse.class);
-        System.out.println("login id" + loginResponse.getUserId());
-       /* if ("SUCCESS".equalsIgnoreCase(loginResponse.getStatus())) {
-            model.addAttribute("id", loginResponse.getId());
-            if ("CUSTOMER".equalsIgnoreCase(loginResponse.getType())) {
+        System.out.println("login id" + loginResponse.toString());
+       if ("SUCCESS".equalsIgnoreCase(loginResponse.getStatus())) {
+           System.out.println("login ");
+           returnView = "cushome";
+            model.addAttribute("id", loginResponse.getUserId());
+           if ("CUSTOMER".equalsIgnoreCase(loginResponse.getType())) {
                 returnView = "cushome";
             } else if ("MERCHANT".equalsIgnoreCase(loginResponse.getType())) {
-
                 returnView = "merchanthome";
-
             }
-        }*/
-        model.addAttribute("id", loginResponse.getUserId());
+        }
         return returnView;
     }
 
@@ -107,7 +103,7 @@ public class UserController {
     public String resolve(@ModelAttribute("resolveBean") ResolveBean resolveBean, Model model) {
 
         System.out.println("********************* ID"+resolveBean.getId());
-        List<TransactionResponse> transactionResponseList = restTemplate.getForObject(TRANSACTION, List.class, resolveBean.getId());
+        List<TransactionResponse> transactionResponseList = restTemplate.getForObject(TRANSACTION, List.class,"5a154399733ca52057dd63f0");
 
         model.addAttribute("id" ,resolveBean.getId());
         model.addAttribute("transactionResponseList" ,transactionResponseList);

@@ -45,15 +45,6 @@
 						name="password" type="password" class="form-control"
 						placeholder="Password" /> <span>${error}</span> <input
 						type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<table>
-						<tr>
-							<td>User Type</td>
-							<td><input type="radio" name="course" value="Regular"
-								checked> Merchant</td>
-							<td><input type="radio" name="course" value="Correspondance">
-								Customer</td>
-						</tr>
-					</table>
 
 					<button class="btn btn-lg btn-primary btn-block" type="submit">Log
 						In</button>

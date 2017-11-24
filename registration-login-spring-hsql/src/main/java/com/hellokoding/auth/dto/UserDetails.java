@@ -1,14 +1,19 @@
 package com.hellokoding.auth.dto;
 
 public class UserDetails {
+
 	private String firstName;
 	private String lastName;
-	private String mobile;
+	private String dateOfBirth;
 	private String type;
 	private String emailAddress;
 	private String password;
-	private String creditCardNumber;
-	private String expiryDate;
+	private String mobile;
+	private String shopName;
+	private String cardNumber;
+	private String cardExpiryDate;
+	private String stripPublicKey;
+
 
 	public String getFirstName() {
 		return firstName;
@@ -26,12 +31,12 @@ public class UserDetails {
 		this.lastName = lastName;
 	}
 
-	public String getMobile() {
-		return mobile;
+	public String getDateOfBirth() {
+		return dateOfBirth;
 	}
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public String getType() {
@@ -58,19 +63,43 @@ public class UserDetails {
 		this.password = password;
 	}
 
-	public String getCreditCardNumber() {
-		return creditCardNumber;
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setCreditCardNumber(String creditCardNumber) {
-		this.creditCardNumber = creditCardNumber;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
-	public String getExpiryDate() {
-		return expiryDate;
+	public String getShopName() {
+		return shopName;
 	}
 
-	public void setExpiryDate(String expiryDate) {
-		this.expiryDate = expiryDate;
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
+	}
+
+	public String getCardNumber() {
+		return cardNumber;
+	}
+
+	public void setCardNumber(String cardNumber) {
+		this.cardNumber = cardNumber;
+	}
+
+	public String getCardExpiryDate() {
+		return cardExpiryDate;
+	}
+
+	public void setCardExpiryDate(String cardExpiryDate) {
+		this.cardExpiryDate = cardExpiryDate;
+	}
+
+	public String getStripPublicKey() {
+		return stripPublicKey;
+	}
+
+	public void setStripPublicKey(String stripPublicKey) {
+		this.stripPublicKey = stripPublicKey;
 	}
 }

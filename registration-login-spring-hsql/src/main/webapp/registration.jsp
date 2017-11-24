@@ -56,14 +56,19 @@
 					<form:errors path="lastName"></form:errors>
 				</div>
 			</spring:bind>
-			
-			<spring:bind path="mobile">
-				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<form:input type="text" path="mobile" class="form-control"
-						placeholder="mobile" autofocus="true"></form:input>
-					<form:errors path="mobile"></form:errors>
-				</div>
-			</spring:bind>
+
+			<spring:bind path="dateOfBirth">
+            				<div class="form-group ${status.error ? 'has-error' : ''}">
+            					<form:input type="text" path="dateOfBirth" class="form-control"
+            						placeholder="dateOfBirth" autofocus="true"></form:input>
+            					<form:errors path="dateOfBirth"></form:errors>
+            				</div>
+            </spring:bind>
+
+			<spring:bind path="type">
+            			<form:radiobuttons path="type" items="${typeList}" />
+             </spring:bind>
+
 			<spring:bind path="emailAddress">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
 					<form:input type="text" path="emailAddress" class="form-control"
@@ -80,25 +85,50 @@
 				</div>
 			</spring:bind>
 
-            <spring:bind path="type">
-			<form:radiobuttons path="type" items="${typeList}" />
+			<spring:bind path="mobile">
+				<div class="form-group ${status.error ? 'has-error' : ''}">
+					<form:input type="text" path="mobile" class="form-control"
+						placeholder="mobile" autofocus="true"></form:input>
+					<form:errors path="mobile"></form:errors>
+				</div>
+
+			</spring:bind>
+
+			<spring:bind path="shopName">
+            				<div class="form-group ${status.error ? 'has-error' : ''}">
+            					<form:input type="text" path="shopName" class="form-control"
+            						placeholder="shopName" autofocus="true"></form:input>
+            					<form:errors path="shopName"></form:errors>
+            				</div>
+
             </spring:bind>
 
-            <spring:bind path="creditCardNumber">
+
+
+
+            <spring:bind path="cardNumber">
             				<div class="form-group ${status.error ? 'has-error' : ''}">
-            					<form:input type="text" path="creditCardNumber" class="form-control"
-            						placeholder="creditCardNumber"></form:input>
-            					<form:errors path="creditCardNumber"></form:errors>
+            					<form:input type="text" path="cardNumber" class="form-control"
+            						placeholder="cardNumber"></form:input>
+            					<form:errors path="cardNumber"></form:errors>
             				</div>
             			</spring:bind>
 
-             <spring:bind path="expiryDate">
+             <spring:bind path="cardExpiryDate">
                         				<div class="form-group ${status.error ? 'has-error' : ''}">
-                        					<form:input type="text" path="expiryDate" class="form-control"
-                        						placeholder="expiryDate"></form:input>
-                        					<form:errors path="expiryDate"></form:errors>
+                        					<form:input type="text" path="cardExpiryDate" class="form-control"
+                        						placeholder="cardExpiryDate"></form:input>
+                        					<form:errors path="cardExpiryDate"></form:errors>
                         				</div>
                         			</spring:bind>
+
+             <spring:bind path="stripPublicKey">
+                        				<div class="form-group ${status.error ? 'has-error' : ''}">
+                        					<form:input type="text" path="stripPublicKey" class="form-control"
+                        						placeholder="stripPublicKey"></form:input>
+                        					<form:errors path="stripPublicKey"></form:errors>
+                        				</div>
+             </spring:bind>
 
 
 

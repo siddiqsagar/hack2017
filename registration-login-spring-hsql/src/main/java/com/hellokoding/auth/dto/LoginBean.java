@@ -1,19 +1,24 @@
 package com.hellokoding.auth.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Created by siddiq on 24/11/17.
  */
 public class LoginBean {
 
-    private String userName;
+    private String username;
     private String password;
 
-    public String getUserName() {
-        return userName;
+    /*@JsonIgnore
+    private String type;*/
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -23,4 +28,12 @@ public class LoginBean {
     public void setPassword(String password) {
         this.password = password;
     }
+
+   /* public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }*/
 }
