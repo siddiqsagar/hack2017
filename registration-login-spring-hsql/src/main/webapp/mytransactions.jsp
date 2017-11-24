@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -15,7 +14,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Customer Home</title>
+<title>Log in with your account</title>
 
 <link href="${contextPath}/resources/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -28,21 +27,34 @@
     <![endif]-->
 </head>
 
-<body>
-
-	<header>
-		<h1>
-			Customer Home Page
-		</h1>
-
-		<div class="container">
-         <form action="resolve" method="POST">
-   	    	<input type="hidden" name="id" value="${id}"><br>
-   	    	 <input type="radio" name="requestView" value="allmerchants" checked> Find Merchants<br>
-              <input type="radio" name="requestView" value="mytransactions"> My Transactions<br>
-   	    	<input type="submit" value="NEXT">
-    	</form>
-		<!-- /container -->
+<<body>
+     <header>
+         <h1>
+             Transaction</span>
+         </h1>
+     </header>
+     <div class="container">
+         <h2 class="form-signin-heading">Create your account</h2>
+         <table>
+             <tr>
+                 <td>Description</td>
+                 <td>Date and time</td>
+                 <td>Amount</td>
+             </tr>
+             <c:forEach items="${transactionResponseList}" var="transactionResponse">
+             <tr>
+                 <td><c:out value="${transactionResponse.description}" /></td>
+                 <td><c:out value="${transactionResponse.transactionDate}" /> <c:out value="${transactionResponse.transactionTime}" /></td>
+                 <td><c:out value="${transactionResponse.totalAmount}" /></td>
+             </tr>
+             </c:forEach>
+         </table>
+         <button class="btn btn-lg btn-primary btn-block" type="button">
+             <h4 class="text-center">
+                 <a href="${contextPath}/cushome">Back to home page</a>
+             </h4>
+         </button>
+     </div>
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script src="${contextPath}/resources/js/bootstrap.min.js"></script>

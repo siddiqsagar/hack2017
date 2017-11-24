@@ -64,7 +64,6 @@
 					<form:errors path="mobile"></form:errors>
 				</div>
 			</spring:bind>
-			emailAddress
 			<spring:bind path="emailAddress">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
 					<form:input type="text" path="emailAddress" class="form-control"
@@ -82,10 +81,26 @@
 			</spring:bind>
 
             <spring:bind path="type">
-			<form:select path="type">
-                <form:options items="${typelist}" />
-            </form:select>
+			<form:radiobuttons path="type" items="${typeList}" />
             </spring:bind>
+
+            <spring:bind path="creditCardNumber">
+            				<div class="form-group ${status.error ? 'has-error' : ''}">
+            					<form:input type="text" path="creditCardNumber" class="form-control"
+            						placeholder="creditCardNumber"></form:input>
+            					<form:errors path="creditCardNumber"></form:errors>
+            				</div>
+            			</spring:bind>
+
+             <spring:bind path="expiryDate">
+                        				<div class="form-group ${status.error ? 'has-error' : ''}">
+                        					<form:input type="text" path="expiryDate" class="form-control"
+                        						placeholder="expiryDate"></form:input>
+                        					<form:errors path="expiryDate"></form:errors>
+                        				</div>
+                        			</spring:bind>
+
+
 
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
 		</form:form>

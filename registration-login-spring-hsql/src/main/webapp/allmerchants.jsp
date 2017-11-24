@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -15,7 +14,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Customer Home</title>
+<title>Log in with your account</title>
 
 <link href="${contextPath}/resources/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -32,16 +31,15 @@
 
 	<header>
 		<h1>
-			Customer Home Page
+			All Available Merchants</span>
 		</h1>
 
 		<div class="container">
-         <form action="resolve" method="POST">
-   	    	<input type="hidden" name="id" value="${id}"><br>
-   	    	 <input type="radio" name="requestView" value="allmerchants" checked> Find Merchants<br>
-              <input type="radio" name="requestView" value="mytransactions"> My Transactions<br>
-   	    	<input type="submit" value="NEXT">
-    	</form>
+
+
+
+
+		</div>
 		<!-- /container -->
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

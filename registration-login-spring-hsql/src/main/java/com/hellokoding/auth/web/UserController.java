@@ -3,18 +3,15 @@ package com.hellokoding.auth.web;
 import com.hellokoding.auth.dto.*;
 import com.hellokoding.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +24,7 @@ public class UserController {
 
     final static String LOGIN_URI = "http://dashdriverapi.azurewebsites.net/login";
     final static String REGISTER_URI = "http://dashdriverapi.azurewebsites.net/login";
+    final static String GET_MERCHANTS_URI = "http://dashdriverapi.azurewebsites.net/merchants";
     final static String TRANSACTION = "http://dashdriverapi.azurewebsites.net/transaction?id={id}";
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
@@ -42,15 +40,30 @@ public class UserController {
 
         RegisterResponse registerResponse = restTemplate.postForObject(REGISTER_URI, userForm, RegisterResponse.class);
 
+        List<Merchant> listOfAvailableMerchants = (List<Merchant>) restTemplate.getForEntity(GET_MERCHANTS_URI, List.class);
+
+
         String returnView = "registration";
         if ("SUCCESS".equalsIgnoreCase(registerResponse.getStatus())) {
             if ("MERCHANT".equalsIgnoreCase(userForm.getType())) {
+                model.addAttribute("cusId", registerResponse.getId());
                 returnView = "merchanthome";
             } else if ("CUSTOMER".equalsIgnoreCase(userForm.getType())) {
+                model.addAttribute("merchantId", registerResponse.getId());
                 returnView = "cushome";
             }
         }
         return returnView;
+    }
+
+    @ModelAttribute("typeList")
+    public List getTypeList() {
+
+        List typeList = new ArrayList();
+        typeList.add("Merchant");
+        typeList.add("Customer");
+        return typeList;
+
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -64,28 +77,38 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@ModelAttribute("loginBean") LoginBean loginBean) {
-
-
+    public String login(@ModelAttribute("loginBean") LoginBean loginBean, Model model) {
+        String returnView = "login";
         LoginResponse loginResponse = restTemplate.postForObject(LOGIN_URI, loginBean, LoginResponse.class);
-        if ("CUSTOMER".equalsIgnoreCase(loginResponse.getType())) {
-            return "cushome";
-        } else if ("MERCHANT".equalsIgnoreCase(loginResponse.getType())) {
-            return "merchanthome";
-        } else {
-            return "login";
-        }
+        if ("SUCCESS".equalsIgnoreCase(loginResponse.getStatus())) {
+            model.addAttribute("id", loginResponse.getId());
+            if ("CUSTOMER".equalsIgnoreCase(loginResponse.getType())) {
+                returnView = "cushome";
+            } else if ("MERCHANT".equalsIgnoreCase(loginResponse.getType())) {
 
+                returnView = "merchanthome";
+            }
+        }
+        return returnView;
     }
 
-    @RequestMapping(value = "/transaction", method = RequestMethod.GET)
-    public ModelAndView transaction(HttpServletRequest httpServletRequest, @RequestParam("id") String id) {
+    @RequestMapping(value = "/cushome", method = RequestMethod.GET)
+    public String cushome(Model model, String error, String logout) {
 
+            model.addAttribute("message", "You have been logged out successfully.");
 
-        List<TransactionResponse> transactionResponseList = restTemplate.getForObject(TRANSACTION, List.class, id);
+        return "cushome";
+    }
 
-        return new ModelAndView("transactions", "transactionResponseList", transactionResponseList);
+    @RequestMapping(value = "/resolve", method = RequestMethod.POST)
+    public String resolve(@ModelAttribute("resolveBean") ResolveBean resolveBean, Model model) {
 
+        System.out.println("********************* ID"+resolveBean.getId());
+        List<TransactionResponse> transactionResponseList = restTemplate.getForObject(TRANSACTION, List.class, resolveBean.getId());
+
+        model.addAttribute("id" ,resolveBean.getId());
+        model.addAttribute("transactionResponseList" ,transactionResponseList);
+        return resolveBean.getRequestView();
     }
 
 }

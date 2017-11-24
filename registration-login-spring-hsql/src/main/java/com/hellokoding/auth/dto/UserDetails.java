@@ -7,6 +7,8 @@ public class UserDetails {
 	private String type;
 	private String emailAddress;
 	private String password;
+	private String creditCardNumber;
+	private String expiryDate;
 
 	public String getFirstName() {
 		return firstName;
@@ -56,4 +58,19 @@ public class UserDetails {
 		this.password = password;
 	}
 
+	public String getCreditCardNumber() {
+		return creditCardNumber;
+	}
+
+	public void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
+	}
+
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
 }
