@@ -6,14 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserController {
@@ -26,6 +27,8 @@ public class UserController {
     final static String REGISTER_URI = "http://dashdriverapi.azurewebsites.net/login";
     final static String GET_MERCHANTS_URI = "http://dashdriverapi.azurewebsites.net/merchants";
     final static String TRANSACTION = "http://dashdriverapi.azurewebsites.net/transaction?id={id}";
+    final static String MERCHANTS = "http://dashdriverapi.azurewebsites.net/merchants";
+    final static String MENU = "http://dashdriverapi.azurewebsites.net/menu?id={id}";
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -50,6 +53,7 @@ public class UserController {
                 returnView = "cushome";
             }
         }
+
         return returnView;
     }
 
@@ -81,11 +85,12 @@ public class UserController {
        if ("SUCCESS".equalsIgnoreCase(loginResponse.getStatus())) {
            System.out.println("login ");
            returnView = "cushome";
-            model.addAttribute("id", loginResponse.getUserId());
            if ("CUSTOMER".equalsIgnoreCase(loginResponse.getType())) {
                 returnView = "cushome";
+               model.addAttribute("cusId", loginResponse.getUserId());
             } else if ("MERCHANT".equalsIgnoreCase(loginResponse.getType())) {
                 returnView = "merchanthome";
+               model.addAttribute("merchantId", loginResponse.getUserId());
             }
         }
         return returnView;
@@ -105,9 +110,22 @@ public class UserController {
         System.out.println("********************* ID"+resolveBean.getId());
         List<TransactionResponse> transactionResponseList = restTemplate.getForObject(TRANSACTION, List.class,"5a154399733ca52057dd63f0");
 
-        model.addAttribute("id" ,resolveBean.getId());
+        model.addAttribute("cusId" ,resolveBean.getId());
         model.addAttribute("transactionResponseList" ,transactionResponseList);
+
+        List<Merchant> merchantList = restTemplate.getForObject(MERCHANTS, List.class);
+        model.addAttribute("merchantList" ,merchantList);
+
         return resolveBean.getRequestView();
+    }
+
+    @RequestMapping(value = "/menus?merchantId={merchantId}", method = RequestMethod.GET)
+    public ModelAndView getMenus(HttpServletRequest httpServletRequest, @RequestParam("merchantId") String merchantId, @RequestParam("cusId") String cusId) {
+        httpServletRequest.setAttribute("cusId", cusId);
+        httpServletRequest.setAttribute("merchantId", merchantId);
+
+        List<Menu> menuList = restTemplate.getForObject(MENU, List.class, merchantId);
+        return new ModelAndView("menus", "menuList", menuList);
     }
 
 }

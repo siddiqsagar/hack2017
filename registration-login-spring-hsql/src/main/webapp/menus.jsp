@@ -16,7 +16,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Merchants</title>
+<title>Menus</title>
 
 <link href="${contextPath}/resources/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -33,22 +33,22 @@
 
 	<header>
 		<h1>
-			Merchants</span>
+			Menus</span>
 		</h1>
 
 	</header>
 	<div class="container">
         <table border="2">
             <tr>
-               <td>Merchant name</td>
-               <td>Shop name</td>
-               <td></td>
+               <td>Item Name</td>
+               <td>Item Price</td>
+               <td>Quantity</td>
              </tr>
-          <c:forEach items="${merchantList}" var="merchant">
+          <c:forEach items="${menuList}" var="menu">
             <tr>
-                <td><c:out value="${merchant.merchantName}" /></td>
-                <td><c:out value="${merchant.shopName}" /></td>
-                <td><a href=<c:out value="/menus?merchantId=${merchant.merchantId}&cusId=${cusId}" />>Connect to merchant</a></td>
+                <td><c:out value="${menu.itemName}" /></td>
+                <td><c:out value="${menu.price}" /></td>
+                <td></td>
             </tr>
 
           </c:forEach>

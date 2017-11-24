@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<%@ page isELIgnored="false" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +16,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Create an account</title>
+<title>Merchants</title>
 
 <link href="${contextPath}/resources/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -34,58 +38,28 @@
 
 	</header>
 	<div class="container">
+        <table border="2">
+            <tr>
+               <td>Merchant name</td>
+               <td>Shop name</td>
+               <td></td>
+             </tr>
+          <c:forEach items="${merchantList}" var="merchant">
+            <tr>
+                <td><c:out value="${merchant.merchantName}" /></td>
+                <td><c:out value="${merchant.shopName}" /></td>
+                <td><a href=<c:out value="/menus?merchantId=${merchant.merchantId}&cusId=${cusId}" />>Connect to merchant</a></td>
+            </tr>
 
-		<form:form method="POST" modelAttribute="userForm" class="form-signin">
-			<h2 class="form-signin-heading">Create your account</h2>
-			<spring:bind path="firstName">
-				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<form:input type="text" path="firstName" class="form-control"
-						placeholder="firstName" autofocus="true"></form:input>
-					<form:errors path="firstName"></form:errors>
-				</div>
-			</spring:bind>
+          </c:forEach>
+        </table>
 
-			<spring:bind path="lastName">
-				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<form:input type="text" path="lastName" class="form-control"
-						placeholder="lastName" autofocus="true"></form:input>
-					<form:errors path="lastName"></form:errors>
-				</div>
-			</spring:bind>
-
-			<spring:bind path="mobile">
-				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<form:input type="text" path="mobile" class="form-control"
-						placeholder="mobile" autofocus="true"></form:input>
-					<form:errors path="mobile"></form:errors>
-				</div>
-			</spring:bind>
-			emailAddress
-			<spring:bind path="emailAddress">
-				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<form:input type="text" path="emailAddress" class="form-control"
-						placeholder="emailAddress" autofocus="true"></form:input>
-					<form:errors path="emailAddress"></form:errors>
-				</div>
-			</spring:bind>
-
-			<spring:bind path="password">
-				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<form:input type="password" path="password" class="form-control"
-						placeholder="password"></form:input>
-					<form:errors path="password"></form:errors>
-				</div>
-			</spring:bind>
-
-            <spring:bind path="type">
-			<form:select path="type">
-                <form:options items="${typelist}" />
-            </form:select>
-            </spring:bind>
-
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-		</form:form>
-
+        </br>
+        <button class="btn btn-lg btn-primary btn-block" type="button">
+            <h4 class="text-center">
+                <a href="${contextPath}/cushome">Back to home page</a>
+            </h4>
+        </button>
 	</div>
 	<!-- /container -->
 	<script
