@@ -104,6 +104,8 @@ public class UserController {
         List<TransactionResponse> transactionResponseList = restTemplate.getForObject(TRANSACTION, List.class,resolveBean.getId());
         model.addAttribute("id" ,resolveBean.getId());
 
+        System.out.println("transactionResponseList size - "+transactionResponseList.size());
+
         model.addAttribute("cusId" ,resolveBean.getId());
         model.addAttribute("transactionResponseList" ,transactionResponseList);
 

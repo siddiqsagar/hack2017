@@ -37,7 +37,7 @@
 
 		<div class="container">
          <form action="resolve" method="POST">
-   	    	<input type="hidden" name="id" value="${id}"><br>
+   	    	<input type="hidden" name="id" value="${cusId}"><br>
    	    	 <input type="radio" name="requestView" value="allmerchants" checked> Find Merchants<br>
               <input type="radio" name="requestView" value="mytransactions"> My Transactions<br>
    	    	<input type="submit" value="NEXT">

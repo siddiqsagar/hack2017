@@ -37,7 +37,7 @@
         <table>
             <tr>
                 <td>Description</td>
-                <td>Date and time></td>
+                <td>Date and time</td>
                 <td>Amount</td>
             </tr>
             <c:forEach items="${transactionResponseList}" var="transactionResponse">

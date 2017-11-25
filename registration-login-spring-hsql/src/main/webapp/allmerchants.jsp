@@ -48,7 +48,7 @@
             <tr>
                 <td><c:out value="${merchant.merchantName}" /></td>
                 <td><c:out value="${merchant.shopName}" /></td>
-                <td><a href=<c:out value="/menus?merchantId=${merchant.merchantId}&cusId=${cusId}" />>Connect to merchant</a></td>
+                <td><a href="<c:url value="/menus?merchantId=${merchant.merchantId}&cusId=${cusId}" />">Connect to merchant</a></td>
             </tr>
 
           </c:forEach>
